@@ -1,0 +1,26 @@
+{
+  "equipments": [
+    {
+      "id": 1,
+      "name": "Fluorescent Bulb",
+      "type": "lighting",
+      "watts": 58,
+      "number": 358
+    },
+    {
+      "id": 2,
+      "name":"Motor",
+      "type":"motor",
+      "watts":2000,
+      "number": 2
+    },
+    {
+      "id": 3,
+      "name": "Desktop computer",
+      "type": "computer",
+      "watts": 250,
+      "number": 24
+    }
+  
+  ]
+}

@@ -10,8 +10,28 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.signInContainer {
+  max-width: 500px;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 300px;
+  border: 1px solid grey;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.signUpContainer {
+  max-width: 500px;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 500px;
+  border: 1px solid grey;
+  padding: 30px;
+  border-radius: 5px;
+}
+
 .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 30px auto;
   overflow: auto;
   min-height: 500px;
@@ -54,7 +74,7 @@ body {
   width: 100%;
 }
 
-.task {
+.equipment {
   background: #f4f4f4;
   margin: 5px;
   padding: 10px 20px;
@@ -65,7 +85,7 @@ body {
   border-left: 5px solid green;
 }
 
-.task h3 {
+.equipment h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
