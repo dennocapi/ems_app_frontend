@@ -9,9 +9,9 @@
     },
     {
       "id": 2,
-      "name":"Motor",
-      "type":"motor",
-      "watts":2000,
+      "name": "Motor",
+      "type": "motor",
+      "watts": 2000,
       "number": 2
     },
     {
@@ -20,7 +20,13 @@
       "type": "computer",
       "watts": 250,
       "number": 24
+    },
+    {
+      "name": "Sony tv",
+      "type": "Television",
+      "watts": "6",
+      "number": "4",
+      "id": 4
     }
-  
   ]
 }

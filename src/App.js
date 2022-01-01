@@ -9,6 +9,8 @@ import SignUp from './pages/signup';
 import SignIn from './pages/signin';
 import Equipments from "./pages/equipments";
 import AddEquipment from "./pages/addEquipment";
+import EquipmentBarChart from "./pages/equipmentBarChart";
+import EquipmentPieChart from "./pages/equipmentsPieChart";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/equipments" element={<Equipments />} />
         <Route path="/addEquipment" element={<AddEquipment />} />
+        <Route path="/pieChart" element={<EquipmentPieChart />} />
+        <Route path="/barGraph" element={<EquipmentBarChart />} />
       </Routes>
     </Router>
   );

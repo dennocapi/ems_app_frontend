@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
+import { PieChart, Pie, Tooltip } from 'recharts'
 import { Link } from 'react-router-dom'
-import Equipment from './equipment'
 
-const Equipments = () => {
+const EquipmentPieChart = () => {
 
     const [equipments, setEquipments] = useState([])
 
@@ -13,32 +13,30 @@ const Equipments = () => {
         }
 
         getEquipments()
-        
+
     }, [])
 
     const fetchEquipments = async () => {
         const res = await fetch(`${process.env.REACT_APP_BASEURL}/equipments`)
         const data = await res.json()
-        
+
         return data
     }
 
     return (
         <div className='container'>
             <Link to="/equipments">Equipments</Link>  &nbsp; 
-            <Link to={"/addEquipment"}>Add Equipment</Link> &nbsp; 
-            <Link to={"/barGraph"}>Power Charts</Link>
-            <div>
-                {equipments.map((equipment) => (
-                    <Equipment 
-                        key={equipment.id}
-                        equipment={equipment}
-                    />
-                ))}
+            <Link to={"/addEquipment"}>Add Equipment</Link><br />
+            <Link to="/barGraph">Bar Graph</Link>  &nbsp;
+            <Link to={"/pieChart"}>Pie Chart</Link>
+            <div className='container'>
+                <PieChart width={730} height={400}>
+                    <Pie data={equipments} isAnimationActive={false} dataKey="watts" nameKey="name" cx="50%" cy="50%" outerRadius={200} fill="#82ca9d" label />
+                    <Tooltip />
+                </PieChart>
             </div>
         </div>
     )
 }
 
-export default Equipments
-
+export default EquipmentPieChart

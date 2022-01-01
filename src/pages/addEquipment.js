@@ -7,6 +7,23 @@ const AddEquipment = () => {
     const [type, setType] = useState('')
     const [watts, setWatts] = useState('')
     const [number, setNumber] = useState('')
+    const [equipments, setEquipments] = useState([])
+
+    const addEquipment = async (equipment) => {
+        console.log('This is the equipment data: ', equipment)
+        const res = await fetch(`${process.env.REACT_APP_BASEURL}/equipments`
+            , {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(equipment)
+            })
+
+        const data = await res.json()
+
+        setEquipments([...equipments, data])
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -23,8 +40,12 @@ const AddEquipment = () => {
             alert('Please the wattage of the equipment')
             return
         }
+        if (!number) {
+            alert('Please enter number of equipments')
+            return
+        }
 
-        // onAdd({ text, date, reminder })
+        addEquipment({ name, type, watts, number })
 
         setName('')
         setType('')
@@ -34,8 +55,9 @@ const AddEquipment = () => {
 
     return (
         <div className='container'>
-            <Link to="/equipments">Equipments</Link> &nbsp; 
-            <Link to="/addEquipment">Add Equipment</Link>
+            <Link to="/equipments">Equipments</Link>  &nbsp;
+            <Link to={"/addEquipment"}>Add Equipment</Link> &nbsp;
+            <Link to={"/barGraph"}>Power Charts</Link>
             <div className='signInContainer'>
                 <h3>Add Equipment</h3>
 
