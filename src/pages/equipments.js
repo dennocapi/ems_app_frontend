@@ -25,10 +25,10 @@ const Equipments = () => {
 
     return (
         <div className='container'>
-            <Link to="/equipments">Equipments</Link>  &nbsp; 
-            <Link to={"/addEquipment"}>Add Equipment</Link> &nbsp; 
-            <Link to={"/barGraph"}>Power Charts</Link>
-            <div>
+            <Link className='Link' to="/equipments">Equipments</Link>  &nbsp; 
+            <Link className='Link' to={"/addEquipment"}>Add Equipment</Link> &nbsp; 
+            <Link className='Link' to={"/barGraph"}>Power Charts</Link>
+            <div className='container'>
                 {equipments.map((equipment) => (
                     <Equipment 
                         key={equipment.id}

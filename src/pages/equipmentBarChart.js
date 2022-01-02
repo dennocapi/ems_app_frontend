@@ -23,10 +23,9 @@ const EquipmentBarChart = () => {
     }
     return (
         <div className='container'>
-            <Link to="/equipments">Equipments</Link>  &nbsp; 
-            <Link to={"/addEquipment"}>Add Equipment</Link> <br />
-            <Link to="/barGraph">Bar Graph</Link>  &nbsp;
-            <Link to={"/pieChart"}>Pie Chart</Link>
+            <Link className='Link' to="/equipments">Go Back</Link>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Link className='Link' to="/barGraph">Bar Graph</Link>  &nbsp;
+            <Link className='Link' to={"/pieChart"}>Pie Chart</Link>
             <div className='container'>
                 <BarChart width={730} height={250} data={equipments}>
                     <CartesianGrid strokeDasharray="3 3" />

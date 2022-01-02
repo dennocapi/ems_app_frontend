@@ -55,9 +55,9 @@ const AddEquipment = () => {
 
     return (
         <div className='container'>
-            <Link to="/equipments">Equipments</Link>  &nbsp;
-            <Link to={"/addEquipment"}>Add Equipment</Link> &nbsp;
-            <Link to={"/barGraph"}>Power Charts</Link>
+            <Link className='Link' to="/equipments">Equipments</Link>  &nbsp;
+            <Link className='Link' to={"/addEquipment"}>Add Equipment</Link> &nbsp;
+            <Link className='Link' to={"/barGraph"}>Power Charts</Link>
             <div className='signInContainer'>
                 <h3>Add Equipment</h3>
 

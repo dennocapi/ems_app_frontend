@@ -20,20 +20,14 @@ const Navbar = () => {
             <Bars />
 
             <NavMenu>
-                <NavLink to="/" activestyle='true'>
-                    Home
-                </NavLink>
                 <NavLink to="/equipments" activestyle='true'>
                     Equipments
                 </NavLink>
-                <NavLink to="/billing" activestyle='true'>
+                <NavLink to="/electricalBills" activestyle='true'>
                     Billing
                 </NavLink>
-                <NavLink to="/about" activestyle='true'>
-                    About
-                </NavLink>
-                <NavLink to="/contact" activestyle='true'>
-                    Contact
+                <NavLink to="/meterReadings" activestyle='true'>
+                    Meter Readings
                 </NavLink>
                 <NavLink to="/signin" activestyle='true'>
                     Sign In
