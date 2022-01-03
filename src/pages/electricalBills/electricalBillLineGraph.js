@@ -1,30 +1,22 @@
 import { useState, useEffect } from 'react'
 import { Tooltip, LineChart, XAxis, YAxis, Legend, CartesianGrid, Line } from 'recharts'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const ElectricalBillLineGraph = () => {
     const [electricalBills, setElectricalBills] = useState([])
 
     useEffect(() => {
-        const getElectricalBills = async () => {
-            const electricalBillsFromServer = await fetchElectricalBills()
-            setElectricalBills(electricalBillsFromServer)
-        }
-
-        getElectricalBills()
-
-    }, [])
-
-    const fetchElectricalBills = async () => {
-        const res = await fetch(`${process.env.REACT_APP_BASEURL}/electricalBills`)
-        const data = await res.json()
-        return data
-    }
+        axios.post(`${process.env.REACT_APP_BASEURL}/electricalBills/getElectricalBills`).then((response) => {
+            setElectricalBills(response.data.electricalBills)
+          })
+    },[]) 
+    
     return (
         <div className='container'>
-            <Link className='Link' to="/electricalBills">Electrical Bills</Link>  &nbsp; 
-            <Link className='Link' to={"/electricalBillLineGraph"}>Bill Graph</Link> &nbsp; 
-            <Link className='Link' to={"/addBill"}>Add Electrical Bill</Link>
+            <Link className='Link' to="/electricalBills">Electrical Bills</Link>  &nbsp;
+            <Link className='Link' to={"/electricalBillLineGraph"}>Bill Graph</Link> &nbsp;
+            <Link className='Link' to={"/addElectricalBill"}>Add Electrical Bill</Link>
             <div className='container'>
                 <LineChart width={730} height={250} data={electricalBills}
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>

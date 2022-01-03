@@ -3,12 +3,12 @@ import { FaTimes } from 'react-icons/fa'
 const MeterReading = ({ meterReading }) => {
     return (
         <div className='equipment'>
-        <h3>
+        <h4>
             Date: {meterReading.date}
             <FaTimes 
             style={{ color: 'red', cursor: 'pointer' }} 
             />
-        </h3>
+        </h4>
         <p>Meter Reading: {meterReading.meterReading}</p>
     </div>
     )

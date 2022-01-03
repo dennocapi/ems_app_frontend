@@ -1,27 +1,17 @@
 import { useState, useEffect } from 'react'
 import { PieChart, Pie, Tooltip, Legend } from 'recharts'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const EquipmentPieChart = () => {
 
     const [equipments, setEquipments] = useState([])
 
     useEffect(() => {
-        const getEquipments = async () => {
-            const equipmentsFromServer = await fetchEquipments()
-            setEquipments(equipmentsFromServer)
-        }
-
-        getEquipments()
-
-    }, [])
-
-    const fetchEquipments = async () => {
-        const res = await fetch(`${process.env.REACT_APP_BASEURL}/equipments`)
-        const data = await res.json()
-
-        return data
-    }
+        axios.post(`${process.env.REACT_APP_BASEURL}/equipments/getEquipments`).then((response) => {
+            setEquipments(response.data.equipments)
+          })
+    },[]) 
 
     return (
         <div className='container'>

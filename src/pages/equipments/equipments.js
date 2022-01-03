@@ -1,28 +1,18 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Equipment from './equipment'
+import axios from 'axios'
 
 const Equipments = () => {
 
     const [equipments, setEquipments] = useState([])
 
     useEffect(() => {
-        const getEquipments = async () => {
-            const equipmentsFromServer = await fetchEquipments()
-            setEquipments(equipmentsFromServer)
-        }
-
-        getEquipments()
-        
-    }, [])
-
-    const fetchEquipments = async () => {
-        const res = await fetch(`${process.env.REACT_APP_BASEURL}/equipments`)
-        const data = await res.json()
-        
-        return data
-    }
-
+        axios.post(`${process.env.REACT_APP_BASEURL}/equipments/getEquipments`).then((response) => {
+            setEquipments(response.data.equipments)
+          })
+    },[])
+    
     return (
         <div className='container'>
             <Link className='Link' to="/equipments">Equipments</Link>  &nbsp; 
@@ -31,7 +21,7 @@ const Equipments = () => {
             <div className='container'>
                 {equipments.map((equipment) => (
                     <Equipment 
-                        key={equipment.id}
+                        key={equipment._id}
                         equipment={equipment}
                     />
                 ))}

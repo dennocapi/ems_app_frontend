@@ -1,26 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Tooltip, LineChart, XAxis, YAxis, Legend, CartesianGrid, Line } from 'recharts'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const MeterReadingLineGraph = () => {
 
     const [meterReadings, setMeterReadings] = useState([])
 
     useEffect(() => {
-        const getMeterReadings = async () => {
-            const meterReadingsFromServer = await fetchMeterReadings()
-            setMeterReadings(meterReadingsFromServer)
-        }
-
-        getMeterReadings()
-
-    }, [])
-
-    const fetchMeterReadings = async () => {
-        const res = await fetch(`${process.env.REACT_APP_BASEURL}/meterReadings`)
-        const data = await res.json()
-        return data
-    }
+        axios.post(`${process.env.REACT_APP_BASEURL}/meterReadings/getMeterReadings`).then((response) => {
+            setMeterReadings(response.data.meterReadings)
+          })
+    },[]) 
 
     return (
         <div className='container'>

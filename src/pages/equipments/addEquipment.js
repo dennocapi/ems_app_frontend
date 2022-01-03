@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const AddEquipment = () => {
 
@@ -7,25 +8,8 @@ const AddEquipment = () => {
     const [type, setType] = useState('')
     const [watts, setWatts] = useState('')
     const [number, setNumber] = useState('')
-    const [equipments, setEquipments] = useState([])
 
-    const addEquipment = async (equipment) => {
-        console.log('This is the equipment data: ', equipment)
-        const res = await fetch(`${process.env.REACT_APP_BASEURL}/equipments`
-            , {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(equipment)
-            })
-
-        const data = await res.json()
-
-        setEquipments([...equipments, data])
-    }
-
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
 
         if (!name) {
@@ -45,7 +29,11 @@ const AddEquipment = () => {
             return
         }
 
-        addEquipment({ name, type, watts, number })
+        try {
+            await axios.post(`${process.env.REACT_APP_BASEURL}/equipments/add`, { name, type, watts, number })
+        } catch (e) {
+            console.log(e)
+        }
 
         setName('')
         setType('')

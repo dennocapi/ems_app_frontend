@@ -1,27 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
-const AddBill = () => {
+const AddElectricalBill = () => {
     const [amount, setAmount] = useState('')
     const [date, setDate] = useState('')
-    const [electricalBills, setElectricalBills] = useState([])
 
-    const addElectricalBill = async (bill) => {
-        const res = await fetch(`${process.env.REACT_APP_BASEURL}/electricalBills`
-            , {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(bill)
-            })
-
-        const data = await res.json()
-
-        setElectricalBills([...electricalBills, data])
-    }
-
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
 
         if (!amount) {
@@ -33,7 +18,12 @@ const AddBill = () => {
             return
         }
 
-        addElectricalBill({ amount, date })
+        // addElectricalBill({ amount, date })
+        try {
+            await axios.post(`${process.env.REACT_APP_BASEURL}/electricalBills/add`, { amount, date  })
+        } catch (e) {
+            console.log(e)
+        }
 
         setAmount('')
         setDate('')
@@ -43,7 +33,7 @@ const AddBill = () => {
         <div className='container'>
             <Link className='Link' to="/electricalBills">Electrical Bills</Link>  &nbsp; 
             <Link className='Link' to={"/electricalBillLineGraph"}>Bill Graph</Link> &nbsp; 
-            <Link className='Link' to={"/addBill"}>Add Electrical Bill</Link>
+            <Link className='Link' to={"/addElectricalBill"}>Add Electrical Bill</Link>
             <div className='signInContainer'>
                 <h3>Add Bill</h3>
 
@@ -69,4 +59,4 @@ const AddBill = () => {
     )
 }
 
-export default AddBill
+export default AddElectricalBill

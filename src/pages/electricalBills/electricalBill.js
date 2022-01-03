@@ -3,13 +3,13 @@ import { FaTimes } from 'react-icons/fa'
 const ElectricalBill = ({ electricalBill }) => {
     return (
         <div className='equipment'>
-            <h3>
+            <h4>
                 Date: {electricalBill.date}
                 <FaTimes 
                 style={{ color: 'red', cursor: 'pointer' }} 
                 />
-            </h3>
-            <p>Amount: {electricalBill.amount}</p>
+            </h4>
+            <p>Amount: {electricalBill.electricalBill}</p>
         </div>
     )
 }

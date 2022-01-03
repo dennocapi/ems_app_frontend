@@ -1,27 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const AddMeterReading = () => {
     const [meterReading, setMeterReading] = useState('')
     const [date, setDate] = useState('')
-    const [MeterReadings, setMeterReadings] = useState([])
 
-    const addMeterReading = async (reading) => {
-        const res = await fetch(`${process.env.REACT_APP_BASEURL}/meterReadings`
-            , {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(reading)
-            })
-
-        const data = await res.json()
-
-        setMeterReadings([...MeterReadings, data])
-    }
-
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
 
         if (!meterReading) {
@@ -33,7 +18,11 @@ const AddMeterReading = () => {
             return
         }
 
-        addMeterReading({ meterReading, date })
+        try {
+            await axios.post(`${process.env.REACT_APP_BASEURL}/meterReadings/add`, { meterReading, date })
+        } catch (e) {
+            console.log(e)
+        }
 
         setMeterReading('')
         setDate('')

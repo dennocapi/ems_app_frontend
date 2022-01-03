@@ -101,7 +101,7 @@ body {
   border-left: 5px solid green;
 }
 
-.equipment h3 {
+.equipment h4 {
   display: flex;
   align-items: center;
   justify-content: space-between;
