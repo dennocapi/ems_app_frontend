@@ -1,6 +1,9 @@
 import { FaTimes } from 'react-icons/fa'
+import { userStore } from '../../store/stores';
 
 const Equipment = ({ equipment }) => {
+    const user = userStore(state => state.user);
+    console.log('User in equipments---------------', user)
     return (
         <div className='equipment'>
             <h4>

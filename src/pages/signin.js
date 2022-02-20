@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { loginUser } from '../api/apis';
+import { userStore } from '../store/stores';
 
 function SignIn() {
-
+    const storeUser = userStore(state => state.storeUser)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -13,7 +15,14 @@ function SignIn() {
             return
         }
 
-        // onAdd({ text, date, reminder })
+        loginUser({ email: email, password: password }).then((response) => {
+            if (response && response.status === 200) {
+                storeUser(response.data.user)
+                window.location.href = "/"
+            } else if (response) {
+                console.log(response)
+            }
+        })
 
         setEmail('')
         setPassword('')
