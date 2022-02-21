@@ -1,20 +1,20 @@
 import { React, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ElectricalBill from './electricalBill'
-import axios from 'axios'
+import { getElectricalBills } from '../../api/apis'
 
 const ElectricalBills = () => {
     const [electricalBills, setElectricalBills] = useState([])
 
     useEffect(() => {
-        let isMounted = true
-
-        axios.post(`${process.env.REACT_APP_BASEURL}/electricalBills/getElectricalBills`).then((response) => {
-            if (isMounted) {
+        getElectricalBills().then((response) => {
+            if (response && response.status === 200) {
                 setElectricalBills(response.data.electricalBills)
+            } else {
+                console.log(response)
             }
         })
-    }, [])
+    },[])
 
     return (
         <div className='container'>

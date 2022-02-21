@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { addElectricalBill } from '../../api/apis'
 
 const AddElectricalBill = () => {
     const [amount, setAmount] = useState('')
@@ -18,21 +18,32 @@ const AddElectricalBill = () => {
             return
         }
 
-        // addElectricalBill({ amount, date })
-        try {
-            await axios.post(`${process.env.REACT_APP_BASEURL}/electricalBills/add`, { amount, date  })
-        } catch (e) {
-            console.log(e)
-        }
+
+        // try {
+        //     await axios.post(`${process.env.REACT_APP_BASEURL}/electricalBills/add`, { amount, date  })
+        // } catch (e) {
+        //     console.log(e)
+        // }
 
         setAmount('')
         setDate('')
     }
 
+    useEffect(() => {
+        addElectricalBill({ amount, date }).then((response) => {
+            if (response && response.status === 200) {
+                window.location.href = "/electricalBills"
+                return false;
+            } else {
+                console.log(response)
+            }
+        })
+    }, [])
+
     return (
         <div className='container'>
-            <Link className='Link' to="/electricalBills">Electrical Bills</Link>  &nbsp; 
-            <Link className='Link' to={"/electricalBillLineGraph"}>Bill Graph</Link> &nbsp; 
+            <Link className='Link' to="/electricalBills">Electrical Bills</Link>  &nbsp;
+            <Link className='Link' to={"/electricalBillLineGraph"}>Bill Graph</Link> &nbsp;
             <Link className='Link' to={"/addElectricalBill"}>Add Electrical Bill</Link>
             <div className='signInContainer'>
                 <h3>Add Bill</h3>

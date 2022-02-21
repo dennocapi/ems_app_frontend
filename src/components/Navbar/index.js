@@ -16,10 +16,12 @@ const Navbar = () => {
     return (
         <>
             <Nav>
+            {user &&
                 <NavLogo to="/">
                     MyUmeme
-                </NavLogo>
-                <Bars />
+                </NavLogo>}
+                {user &&
+                <Bars />}
 
                 <NavMenu>
                     {user &&

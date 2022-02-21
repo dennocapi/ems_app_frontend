@@ -47,6 +47,7 @@ const SignUp = () => {
                     setLoadingUser(false)
                     window.location.href = "/"
                     // console.log(response)
+                    return false;
                 } else {
                     console.log(response)
                     setLoadingUser(false)

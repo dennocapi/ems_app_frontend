@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Equipment from './equipment'
-import axios from 'axios'
+import { getEquipments } from '../../api/apis'
 
 const Equipments = () => {
 
     const [equipments, setEquipments] = useState([])
 
     useEffect(() => {
-        axios.post(`${process.env.REACT_APP_BASEURL}/equipments/getEquipments`).then((response) => {
-            setEquipments(response.data.equipments)
-          })
+        getEquipments().then((response) => {
+            if (response && response.status === 200) {
+                console.log("response from get equipments-----------")
+                console.log(response)
+                setEquipments(response.data.equipments)
+            } else {
+                console.log(response)
+            }
+        })
     },[])
     
     return (

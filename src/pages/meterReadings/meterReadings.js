@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import MeterReading from './meterReading'
-import axios from 'axios'
+import { getMeterReadings } from '../../api/apis'
 
 const MeterReadings = () => {
     const [meterReadings, setMeterReadings] = useState([])
 
     useEffect(() => {
-        let isMounted = true
-
-        axios.post(`${process.env.REACT_APP_BASEURL}/meterReadings/getMeterReadings`).then((response) => {
-            if (isMounted) {
+        getMeterReadings().then((response) => {
+            if (response && response.status === 200) {
                 setMeterReadings(response.data.meterReadings)
+            } else {
+                console.log(response)
             }
         })
-    }, [])
+    },[])
 
     return (
         <div className='container'>
