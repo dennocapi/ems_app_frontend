@@ -4,6 +4,7 @@ import { userStore } from '../store/stores';
 
 function SignIn() {
     const storeUser = userStore(state => state.storeUser)
+    const setLoadingUser = userStore(state => state.setLoadingUser)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -14,13 +15,16 @@ function SignIn() {
             alert('Please input email')
             return
         }
-
+        // setLoadingUser(true)
         loginUser({ email: email, password: password }).then((response) => {
             if (response && response.status === 200) {
                 storeUser(response.data.user)
+                // setLoadingUser(false)
                 window.location.href = "/"
+                console.log(response)
             } else if (response) {
                 console.log(response)
+                setLoadingUser(false)
             }
         })
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { userStore } from '../../store/stores';
 
 import {
     Nav,
@@ -11,32 +12,39 @@ import {
 } from "./NavbarElements";
 
 const Navbar = () => {
+    const user = userStore(state => state.user);
     return (
         <>
-           <Nav>
-            <NavLogo to="/">
-                MyUmeme
-            </NavLogo>
-            <Bars />
+            <Nav>
+                <NavLogo to="/">
+                    MyUmeme
+                </NavLogo>
+                <Bars />
 
-            <NavMenu>
-                <NavLink to="/equipments" activestyle='true'>
-                    Equipments
-                </NavLink>
-                <NavLink to="/electricalBills" activestyle='true'>
-                    Billing
-                </NavLink>
-                <NavLink to="/meterReadings" activestyle='true'>
-                    Meter Readings
-                </NavLink>
-                <NavLink to="/signin" activestyle='true'>
-                    Sign In
-                </NavLink>
-                <NavBtn>
-                    <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>                
-                </NavBtn>
-            </NavMenu> 
-           </Nav> 
+                <NavMenu>
+                    {user &&
+                        <NavLink to="/equipments" activestyle='true'>
+                            Equipments
+                        </NavLink>
+                    }
+
+                    {user && <NavLink to="/electricalBills" activestyle='true'>
+                        Billing
+                    </NavLink>}
+                    {user && <NavLink to="/meterReadings" activestyle='true'>
+                        Meter Readings
+                    </NavLink>}
+                    {!user && <NavLink to="/signin" activestyle='true'>
+                        Sign In
+                    </NavLink>}
+                    {user && <NavLink to="/logout" activestyle='true'>
+                        Logout
+                    </NavLink>}
+                    {!user && <NavBtn>
+                        <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>
+                    </NavBtn>}
+                </NavMenu>
+            </Nav>
         </>
     );
 };

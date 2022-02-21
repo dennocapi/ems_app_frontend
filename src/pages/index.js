@@ -1,14 +1,24 @@
 import { useState, useEffect} from 'react';
 import axios from 'axios';
+import { userStore } from '../store/stores';
+import {home } from '../api/apis'
 
 const Home = () => {
   const [welcome, setWelcome] = useState([])
+  const user = userStore(state => state.user);
+  const loadingUser = userStore(state => state.loadingUser);
   
+  useEffect(() =>{
+    if(!loadingUser && !user){
+      window.location.href = '/signin'
+    }
+
+  }, [user, loadingUser])
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BASEURL}/`).then((response) => {
+    home().then(response => {
       setWelcome(response.data)
     })
-  })
+  }, [])
 
   return (
     <div className='container'>

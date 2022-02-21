@@ -4,6 +4,7 @@ import { userStore } from '../store/stores';
 
 const SignUp = () => {
     const storeUser = userStore(state => state.storeUser)
+    const setLoadingUser = userStore(state => state.setLoadingUser)
     const [email, setEmail] = useState('')
     const [location, setLocation] = useState('')
     const [password, setPassword] = useState('')
@@ -39,13 +40,16 @@ const SignUp = () => {
         }
 
         try {
+            setLoadingUser(true)
             registerUser({ email: email, password: password, companyName: companyName, location: location }).then(response => {
-
                 if (response && response.status === 200) {
                     storeUser(response.data.user)
+                    setLoadingUser(false)
                     window.location.href = "/"
+                    // console.log(response)
                 } else {
                     console.log(response)
+                    setLoadingUser(false)
                 }
             })
         } catch (e) {

@@ -31,3 +31,15 @@ export const refreshToken = async () => {
         return error.response
     })
 }
+
+export const home = async () => {
+    return await api.get('/').then((response) => response).catch((error) => {
+        return error.response
+    })
+}
+
+export const logout = async () => {
+    return await api.post('/users/logout').then((response) => response).catch((error) => {
+        return error.response
+    })
+}
