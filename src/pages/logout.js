@@ -6,16 +6,14 @@ const Logout = () => {
     const storeUser = userStore(state => state.storeUser);
     useEffect(() => {
         logout().then((response) => {
-            // if (response.status === 200) {
+            if (response.status === 200) {
                 storeUser(null)
-                console.log("Logout response 1----------------")
-                console.log(response)
                 window.location.href = '/signin'
-            // }
-            // else{
-            //     console.log("Logout response 2----------------")
-            //     console.log(response)
-            // }
+            }
+            else{
+                console.log("Logout response----------------")
+                console.log(response)
+            }
         })
     }, [])
     return (

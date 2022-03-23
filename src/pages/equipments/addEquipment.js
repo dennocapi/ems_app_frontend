@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import {addElectricalEquipment} from '../../api/apis'
+import { useNavigate } from 'react-router-dom'
 
 const AddEquipment = () => {
+    const navigate = useNavigate();
 
     const [name, setName] = useState('')
     const [type, setType] = useState('')
@@ -13,7 +15,7 @@ const AddEquipment = () => {
         e.preventDefault()
 
         if (!name) {
-            alert('Please input email')
+            alert('Please input name of equipment')
             return
         }
         if (!type) {
@@ -28,9 +30,15 @@ const AddEquipment = () => {
             alert('Please enter number of equipments')
             return
         }
-
+        
         try {
-            await axios.post(`${process.env.REACT_APP_BASEURL}/equipments/add`, { name, type, watts, number })
+            addElectricalEquipment({ name, type, watts, number }).then((response) => {
+                if (response && response.status === 200) {
+                    navigate('/equipments')
+                } else {
+                    console.log(response)
+                }
+            })
         } catch (e) {
             console.log(e)
         }

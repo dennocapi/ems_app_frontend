@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { userStore } from '../../store/stores'
 import { addElectricalBill } from '../../api/apis'
 
 const AddElectricalBill = () => {
     const [amount, setAmount] = useState('')
     const [date, setDate] = useState('')
+    const user = userStore(state => state.user)
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -18,33 +20,28 @@ const AddElectricalBill = () => {
             return
         }
 
-
-        // try {
-        //     await axios.post(`${process.env.REACT_APP_BASEURL}/electricalBills/add`, { amount, date  })
-        // } catch (e) {
-        //     console.log(e)
-        // }
+        try {
+            addElectricalBill({ amount, date }).then((response) => {
+                if (response && response.status === 200) {
+                    window.location.href = "/electricalBills"
+                    return false;
+                } else {
+                    console.log(response)
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
 
         setAmount('')
         setDate('')
     }
 
-    useEffect(() => {
-        addElectricalBill({ amount, date }).then((response) => {
-            if (response && response.status === 200) {
-                window.location.href = "/electricalBills"
-                return false;
-            } else {
-                console.log(response)
-            }
-        })
-    }, [])
-
     return (
         <div className='container'>
-            <Link className='Link' to="/electricalBills">Electrical Bills</Link>  &nbsp;
-            <Link className='Link' to={"/electricalBillLineGraph"}>Bill Graph</Link> &nbsp;
-            <Link className='Link' to={"/addElectricalBill"}>Add Electrical Bill</Link>
+            {user &&<Link className='Link' to="/electricalBills">Electrical Bills</Link>}  &nbsp;
+            {user &&<Link className='Link' to={"/electricalBillLineGraph"}>Bill Graph</Link>} &nbsp;
+            {user && <Link className='Link' to={"/addElectricalBill"}>Add Electrical Bill</Link>}
             <div className='signInContainer'>
                 <h3>Add Bill</h3>
 

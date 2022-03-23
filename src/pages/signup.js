@@ -1,119 +1,93 @@
 import { useState } from 'react'
 import { registerUser } from '../api/apis';
 import { userStore } from '../store/stores';
+import { Row, Col } from 'react-bootstrap'
 
 const SignUp = () => {
     const storeUser = userStore(state => state.storeUser)
-    const setLoadingUser = userStore(state => state.setLoadingUser)
+
+    const [message, setMessage] = useState('');
     const [email, setEmail] = useState('')
     const [location, setLocation] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [companyName, setCompanyName] = useState('')
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
+        console.log('clicked')
         e.preventDefault()
 
-        if (!email) {
-            alert('Please input email')
-            return
-        }
-        if (!location) {
-            alert('Please location')
-            return
-        }
-        if (!password) {
-            alert('Please input password')
-            return
-        }
-        if (!confirmPassword) {
-            alert('Please input confirm password')
-            return
-        }
-        if (!companyName) {
-            alert('Please input company name')
-            return
-        }
-        if (password !== confirmPassword) {
-            alert('Password mismatch!')
-            return
-        }
-
-        try {
-            setLoadingUser(true)
-            registerUser({ email: email, password: password, companyName: companyName, location: location }).then(response => {
-                if (response && response.status === 200) {
-                    storeUser(response.data.user)
-                    setLoadingUser(false)
-                    window.location.href = "/"
-                    // console.log(response)
-                    return false;
-                } else {
-                    console.log(response)
-                    setLoadingUser(false)
-                }
-            })
-        } catch (e) {
-            console.log(e)
-        }
-
-        setEmail('')
-        setLocation('')
-        setPassword('')
-        setConfirmPassword('')
-        setCompanyName('')
+        registerUser({ email: email, password: password, companyName: companyName, location: location }).then(response => {
+            
+            if (response && response.status === 200) {
+                storeUser(response.data.user)
+                window.location.href = "/"
+                return false;
+            } else {
+                setMessage(response.data.message)
+            }
+        }).catch(error => {
+            alert('An error occured.')
+        })
     }
 
     return (
-        <div className='signUpContainer'>
+            <div className="signUpContainer">
+                <Row>
+                    <Col></Col>
+                    <h3>Sign Up and get started</h3>
+                    {message && <p className='error'>{message}</p>}
+                    <Col>
+                        <form className='add-form'>
 
-            <h3>Sign Up and get started</h3>
+                            <div className='form-control'>
+                                <label>Email</label>
+                                <input type='email' placeholder='Enter Company Email'
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
 
-            <form className='add-form' onSubmit={onSubmit}>
+                            <div className='form-control'>
+                                <label>Company Name</label>
+                                <input type='text' placeholder='CompanyInstitution/Building Name'
+                                    value={companyName}
+                                    onChange={(e) => setCompanyName(e.target.value)}
+                                />
+                            </div>
 
-                <div className='form-control'>
-                    <label>Email</label>
-                    <input type='email' placeholder='Enter Company Email'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
+                            <div className='form-control'>
+                                <label>Location</label>
+                                <input type='text' placeholder='Location of the company/institution/building'
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                />
+                            </div>
+                        </form>
+                    </Col>
+                    <Col>
+                        <div className='form-control'>
+                            <label>Password</label>
+                            <input type='password' placeholder='Password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
 
-                <div className='form-control'>
-                    <label>Company Name</label>
-                    <input type='text' placeholder='CompanyInstitution/Building Name'
-                        value={companyName}
-                        onChange={(e) => setCompanyName(e.target.value)}
-                    />
-                </div>
-
-                <div className='form-control'>
-                    <label>Location</label>
-                    <input type='text' placeholder='Location of the company/institution/building'
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                    />
-                </div>
-
-                <div className='form-control'>
-                    <label>Password</label>
-                    <input type='password' placeholder='Password'
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-
-                <div className='form-control'>
-                    <label>Confirm password</label>
-                    <input type='password' placeholder='Confirm Password'
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                </div>
-
-                <input type='submit' value='Sign Up' className='btn btn-block' />
-            </form>
-        </div>
+                        <div className='form-control'>
+                            <label>Confirm password</label>
+                            <input type='password' placeholder='Confirm Password'
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                            />
+                        </div>
+                    </Col>
+                    <form onSubmit={onSubmit}>
+                    <input type='submit' value='Sign up' className='btn btn-primary btn-block' />
+                    </form>
+                    <Col></Col>
+                </Row>
+            </div>
     )
 }
 

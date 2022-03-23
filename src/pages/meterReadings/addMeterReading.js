@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { userStore } from '../../store/stores'
+import { addMeterReading } from '../../api/apis'
 
 const AddMeterReading = () => {
     const [meterReading, setMeterReading] = useState('')
     const [date, setDate] = useState('')
+    const user = userStore(state => state.user)
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -17,9 +19,15 @@ const AddMeterReading = () => {
             alert('Please input the date')
             return
         }
-
         try {
-            await axios.post(`${process.env.REACT_APP_BASEURL}/meterReadings/add`, { meterReading, date })
+            addMeterReading({ meterReading, date }).then((response) => {
+                if (response && response.status === 200) {
+                    window.location.href = "/meterReadings"
+                    return false;
+                } else {
+                    console.log(response)
+                }
+            })
         } catch (e) {
             console.log(e)
         }
@@ -29,9 +37,9 @@ const AddMeterReading = () => {
     }
     return (
         <div className='container'>
-            <Link className='Link' to="/meterReadings">Meter Readings</Link>  &nbsp; 
-            <Link className='Link' to={"/meterReadingLineGraph"}>Meter Reading Graph</Link> &nbsp; 
-            <Link className='Link' to={"/addMeterReading"}>Add Meter Reading</Link> 
+            {user &&<Link className='Link' to="/meterReadings">Meter Readings</Link>}  &nbsp; 
+            {user &&<Link className='Link' to={"/meterReadingLineGraph"}>Meter Reading Graph</Link>} &nbsp; 
+            {user &&<Link className='Link' to={"/addMeterReading"}>Add Meter Reading</Link>}
             <div className='signInContainer'>
                 <h3>Add Meter Reading</h3>
 

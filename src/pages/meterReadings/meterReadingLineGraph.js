@@ -1,23 +1,32 @@
 import { useState, useEffect } from 'react'
 import { Tooltip, LineChart, XAxis, YAxis, Legend, CartesianGrid, Line } from 'recharts'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { userStore } from '../../store/stores'
+import { getMeterReadings } from '../../api/apis'
 
 const MeterReadingLineGraph = () => {
 
     const [meterReadings, setMeterReadings] = useState([])
+    const user = userStore(state => state.user)
 
     useEffect(() => {
-        axios.post(`${process.env.REACT_APP_BASEURL}/meterReadings/getMeterReadings`).then((response) => {
-            setMeterReadings(response.data.meterReadings)
-          })
+          let isMounted = true
+          if(isMounted){
+          getMeterReadings().then((response) => {
+              if (response && response.status === 200) {
+                  setMeterReadings(response.data.meterReadings)
+              } else {
+                  console.log(response)
+              }
+          })}
+          return () => { isMounted = false }
     },[]) 
 
     return (
         <div className='container'>
-            <Link className='Link' to="/meterReadings">Meter Readings</Link>  &nbsp; 
-            <Link className='Link' to={"/meterReadingLineGraph"}>Meter Reading Graph</Link> &nbsp; 
-            <Link className='Link' to={"/addMeterReading"}>Add Meter Reading</Link> 
+            {user &&<Link className='Link' to="/meterReadings">Meter Readings</Link>}  &nbsp; 
+            {user &&<Link className='Link' to={"/meterReadingLineGraph"}>Meter Reading Graph</Link>} &nbsp; 
+            {user &&<Link className='Link' to={"/addMeterReading"}>Add Meter Reading</Link>}
             <div className='container'>
                 <LineChart width={730} height={250} data={meterReadings}
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>

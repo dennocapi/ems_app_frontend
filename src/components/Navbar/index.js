@@ -16,25 +16,27 @@ const Navbar = () => {
     return (
         <>
             <Nav>
-            {user &&
-                <NavLogo to="/">
+                <NavLogo className="NavLogo" to="/">
                     MyUmeme
-                </NavLogo>}
-                {user &&
-                <Bars />}
-
+                </NavLogo>
+                <Bars />
                 <NavMenu>
+                <NavLink to="/costCalculator" activestyle='true'>
+                            Calculator
+                        </NavLink>
                     {user &&
                         <NavLink to="/equipments" activestyle='true'>
                             Equipments
                         </NavLink>
                     }
-
                     {user && <NavLink to="/electricalBills" activestyle='true'>
                         Billing
                     </NavLink>}
                     {user && <NavLink to="/meterReadings" activestyle='true'>
                         Meter Readings
+                    </NavLink>}
+                    {user && <NavLink to="/notifications" activestyle='true'>
+                        Notifications
                     </NavLink>}
                     {!user && <NavLink to="/signin" activestyle='true'>
                         Sign In

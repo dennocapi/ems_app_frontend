@@ -7,14 +7,10 @@ function SignIn() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
 
     const onSubmit = (e) => {
         e.preventDefault()
-
-        if(!email) {
-            alert('Please input email')
-            return
-        }
 
         loginUser({ email: email, password: password }).then((response) => {
             if (response && response.status === 200) {
@@ -22,18 +18,15 @@ function SignIn() {
                 window.location.href = "/"
                 return false;
             } else if (response) {
-                console.log(response)
+                setMessage(response.data.message)
             }
-        })
-        setEmail('')
-        setPassword('')
+        }).catch(error => alert('An error occured.'))
     }
 
     return (
         <div className='signInContainer'>
-            
             <h3>Sign In</h3>
-
+            {message && <p className='error'>{message}</p>}
             <form className='add-form' onSubmit={onSubmit}>
             <div className='form-control'>
                 <label>Email</label>
@@ -50,7 +43,7 @@ function SignIn() {
                 />
             </div>
 
-            <input type='submit' value='Sign In' className='btn btn-block' />
+            <input type='submit' value='Sign In' className='btn btn-primary btn-block' />
         </form>
         </div>
     )

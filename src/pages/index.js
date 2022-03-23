@@ -1,33 +1,63 @@
-import { useState, useEffect} from 'react';
-import { userStore } from '../store/stores';
-import {home } from '../api/apis'
-
+import { Card, Button, Row, Col, Container } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 const Home = () => {
-  const [welcome, setWelcome] = useState([])
-  const user = userStore(state => state.user);
-  const loadingUser = userStore(state => state.loadingUser);
-  
-  useEffect(() =>{
-    if(!loadingUser && !user){
-      window.location.href = '/signin'
-    }
-
-  }, [user, loadingUser])
-  useEffect(() => {
-    home().then(response => {
-      setWelcome(response.data)
-    })
-  }, [])
 
   return (
-    <div className='container'>
-      <h1>{welcome}</h1>
-      <p>This website is dedicated to Prof. Nzila group 4 Members. </p><br /><br /><br />
-      <p>Hebu amueni ni nini tutaweka hii home page, hehe.</p><br /><br />
-
-    <h3>Anyway, Happy New Year guys!!!</h3>
-
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <Card className="border-primary" style={{ width: '18rem' }}>
+            <Card.Body>
+              <Card.Title><b>Cost calculator</b></Card.Title>
+              <Card.Text>
+                Electrical energy cost calculator for a specific equipment.
+              </Card.Text>
+              <Button variant="success" ><Link className='text-white' to="/costCalculator">Calculator</Link></Button>
+            </Card.Body>
+          </Card>
+          <Card className="border-warning" style={{ width: '18rem' }}>
+            <Card.Body>
+              <Card.Title><b>Equipment</b></Card.Title>
+              <Card.Text>
+                View all your equipment, usage and power consumption.
+              </Card.Text>
+              <Button variant="success" ><Link className='text-white' to="/equipments">Equipment</Link></Button>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card className="border-danger" style={{ width: '18rem' }}>
+            <Card.Body>
+              <Card.Title><b>Billing</b></Card.Title>
+              <Card.Text>
+                View all your bills here.
+              </Card.Text>
+              <Button variant="success"><Link className='text-white' to="/electricalBills">Electrical Bills</Link></Button>
+            </Card.Body>
+          </Card>
+          <Card className="border-success" style={{ width: '18rem' }}>
+            <Card.Body>
+              <Card.Title><b>Notifications</b></Card.Title>
+              <Card.Text>
+                View Notifications and energy saving tips.
+              </Card.Text>
+              <Button variant="success"><Link className='text-white' to="/meterReadings">Meter Readings</Link></Button>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card className="border-info" style={{ width: '18rem' }}>
+            <Card.Body>
+              <Card.Title><b>Meter readings</b></Card.Title>
+              <Card.Text>
+                View all your meter readings here.
+              </Card.Text>
+              <Button variant="success"><Link className='text-white' to="/meterReadings">Meter Readings</Link></Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

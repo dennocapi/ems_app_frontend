@@ -40,14 +40,48 @@ export const logout = async () => {
     })
 }
 
-export const addElectricalBill = async ({ amount, date}) => {
-    return await api.post('/electricalBills/add', { amount, date }).then((response) => response).catch((error) => {
+export const addElectricalEquipment = async ({
+    name,
+    type,
+    watts,
+    number
+}) => {
+    return await api.post('/equipments/add', {
+        name,
+        type,
+        watts,
+        number
+    }).then((response) => response).catch((error) => {
+        return error.response
+    })
+}
+
+export const addElectricalBill = async ({
+    amount,
+    date
+}) => {
+    return await api.post('/electricalBills/add', {
+        amount,
+        date
+    }).then((response) => response).catch((error) => {
+        return error.response
+    })
+}
+
+export const addMeterReading = async ({
+    meterReading,
+    date
+}) => {
+    return await api.post('/meterReadings/add', {
+        meterReading,
+        date
+    }).then((response) => response).catch((error) => {
         return error.response
     })
 }
 
 export const getEquipments = async () => {
-    return await api.post('equipments/getEquipments').then((response) => response).catch((error) => {
+    return await api.post('/equipments/getEquipments').then((response) => response).catch((error) => {
         return error.response
     })
 }
@@ -59,7 +93,40 @@ export const getElectricalBills = async () => {
 }
 
 export const getMeterReadings = async () => {
-    return await api.post('meterReadings/getMeterReadings').then((response) => response).catch((error) => {
+    return await api.post('/meterReadings/getMeterReadings').then((response) => response).catch((error) => {
         return error.response
     })
 }
+
+export const deleteEquipment = async (equipmentId) => {
+    return await api.delete(`/equipments/deleteEquipment/${equipmentId}`).then((response) => response).catch((error) => {
+        return error.response
+    })
+}
+
+export const editEquipment = async (equipmentId) => {
+    return await api.patch(`/equipments/updateEquipment/${equipmentId}`).then((response) => response).catch((error) => {
+        return error.response
+    })
+}
+
+export const getEquipment = async (equipmentId) => {
+    return await api.get(`/equipments/getEquipment/${equipmentId}`, {
+        equipmentId
+    }).then((response) => response).catch((error) => {
+        return error.response
+    })
+}
+
+export const deleteBill = async (billId) => {
+    return await api.delete(`/electricalBills/deleteElectricalBill/${billId}`).then((response) => response).catch((error) => {
+        return error.response
+    })
+}
+
+export const deleteMeterReading = async (readingId) => {
+    return await api.delete(`/meterReadings/deleteMeterReading/${readingId}`).then((response) => response).catch((error) => {
+        return error.response
+    })
+}
+

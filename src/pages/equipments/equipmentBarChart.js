@@ -1,21 +1,30 @@
 import { useState, useEffect } from 'react'
 import { Tooltip, BarChart, XAxis, YAxis, Legend, CartesianGrid, Bar } from 'recharts'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { userStore } from '../../store/stores'
+import { getEquipments } from '../../api/apis'
 
 const EquipmentBarChart = () => {
     const [equipments, setEquipments] = useState([])
+    const user = userStore(state => state.user)
 
     useEffect(() => {
-        axios.post(`${process.env.REACT_APP_BASEURL}/equipments/getEquipments`).then((response) => {
-            setEquipments(response.data.equipments)
-          })
+        let isMounted = true
+        if(isMounted){
+        getEquipments().then((response) => {
+            if (response && response.status === 200) {
+                setEquipments(response.data.equipments)
+            } else {
+                console.log(response)
+            }
+        })}
+        return () => { isMounted = false }
     },[])     
     return (
         <div className='container'>
-            <Link className='Link' to="/equipments">Go Back</Link>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Link className='Link' to="/barGraph">Bar Graph</Link>  &nbsp;
-            <Link className='Link' to={"/pieChart"}>Pie Chart</Link>
+            {user &&<Link className='Link' to="/equipments">Go Back</Link>}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {user &&<Link className='Link' to="/barGraph">Bar Graph</Link>}  &nbsp;
+            {user &&<Link className='Link' to={"/pieChart"}>Pie Chart</Link>}
             <div className='container'>
                 <BarChart width={730} height={250} data={equipments}>
                     <CartesianGrid strokeDasharray="3 3" />

@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import './App.css';
-import { userStore } from './store/stores';
+import { userStore } from './store/stores'
 import history from './default';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Container } from 'react-bootstrap'
 
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -22,66 +24,70 @@ import ElectricalBillLineGraph from "./pages/electricalBills/electricalBillLineG
 import AddMeterReading from "./pages/meterReadings/addMeterReading";
 import MeterReadings from "./pages/meterReadings/meterReadings";
 import MeterReadingLineGraph from "./pages/meterReadings/meterReadingLineGraph";
+import EditEquipment from "./pages/equipments/editEquipment"
+import Notifications from "./components/notifications"
+import CostCalculator from "./components/costCalculator"
+import Toasts from "./components/toast"
 
 function App() {
 
-  const user = userStore(state => state.user);
-  const storeUser = userStore(state => state.storeUser);
-  const setLoadingUser = userStore(state => state.setLoadingUser);
-
+  const user = userStore(state => state.user)
+  const storeUser = userStore(state => state.storeUser)
   useEffect(() => {
     const fetchNewToken = () => {
-      setLoadingUser(true)
       refreshToken().then((response) => {
         if (response && response.status === 200) {
           storeUser(response.data.user)
-          setLoadingUser(false)
         }
         else {
-          setLoadingUser(false)
+          console.log(response)
         }
       })
     }
     if (!user) {
-      setLoadingUser(true)
       refreshToken().then((response) => {
         console.log('Refresh session------------')
         console.log(response)
         if (response && response.status === 200) {
           storeUser(response.data.user)
-          setLoadingUser(false)
           setTimeout(fetchNewToken, 1.8e+6)
         }
         else {
-          setLoadingUser(false)
+          
         }
       })
     } else {
       setTimeout(fetchNewToken, 1.8e+6)
     }
-  }, [user, storeUser])
+  }, [user, storeUser]);
+  
   return (
     <Router history={history}>
       <Navbar />
+      <Container>
       <Routes>
-        <Route path="/" exact element={<Home />} />
+        {user ? <Route path="/" exact element={<Home />} /> : <Route path="/signin" element={<SignIn />} />}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/equipments" element={<Equipments />} />
-        <Route path="/addEquipment" element={<AddEquipment />} />
-        <Route path="/pieChart" element={<EquipmentPieChart />} />
-        <Route path="/barGraph" element={<EquipmentBarChart />} />
-        <Route path="/addElectricalBill" element={<AddElectricalBill />} />
-        <Route path="/electricalBills" element={<ElectricalBills />} />
-        <Route path="/electricalBillLineGraph" element={<ElectricalBillLineGraph />} />
-        <Route path="/addMeterReading" element={<AddMeterReading />} />
-        <Route path="/meterReadings" element={<MeterReadings />} />
-        <Route path="/meterReadingLineGraph" element={<MeterReadingLineGraph />} />
-
+        {!user && <Route path="/signin" element={<SignIn />} />}
+        {user && <Route path="/logout" element={<Logout />} />}
+        {!user && <Route path="/sign-up" element={<SignUp />} />}
+        {user && <Route path="/equipments" element={<Equipments />} />}
+        {user && <Route path="/addEquipment" element={<AddEquipment />} />}
+        {user && <Route path="/pieChart" element={<EquipmentPieChart />} />}
+        {user && <Route path="/barGraph" element={<EquipmentBarChart />} />}
+        {user && <Route path="/addElectricalBill" element={<AddElectricalBill />} />}
+        {user && <Route path="/electricalBills" element={<ElectricalBills />} />}
+        {user && <Route path="/electricalBillLineGraph" element={<ElectricalBillLineGraph />} />}
+        {user && <Route path="/addMeterReading" element={<AddMeterReading />} />}
+        {user && <Route path="/meterReadings" element={<MeterReadings />} />}
+        {user && <Route path="/meterReadingLineGraph" element={<MeterReadingLineGraph />} />}
+        {user && <Route path="/editEquipment" element={<EditEquipment />} />}
+        {user && <Route path="/notifications" element={<Notifications />} />}
+        {user && <Route path="/costCalculator" element={<CostCalculator />} />}
+        <Route path="/toast" element={<Toasts />} />
       </Routes>
+      </Container>
     </Router>
   );
 }
