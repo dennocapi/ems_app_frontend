@@ -15,7 +15,7 @@ const Logout = () => {
                 console.log(response)
             }
         })
-    }, [])
+    }, [storeUser])
     return (
         <div></div>
     )
