@@ -40,18 +40,8 @@ export const logout = async () => {
     })
 }
 
-export const addElectricalEquipment = async ({
-    name,
-    type,
-    watts,
-    number
-}) => {
-    return await api.post('/equipments/add', {
-        name,
-        type,
-        watts,
-        number
-    }).then((response) => response).catch((error) => {
+export const addElectricalEquipment = async (equipment) => {
+    return await api.post('/equipments/add', equipment).then((response) => response).catch((error) => {
         return error.response
     })
 }
@@ -104,12 +94,28 @@ export const deleteEquipment = async (equipmentId) => {
     })
 }
 
-export const editEquipment = async (equipmentId) => {
-    return await api.patch(`/equipments/updateEquipment/${equipmentId}`).then((response) => response).catch((error) => {
+export const editEquipment = async (equipment) => {
+    console.log('Equipment -------', equipment)
+    let equipmentId = equipment.equipmentId
+    return await api.patch(`/equipments/updateEquipment/${equipmentId}`, equipment).then((response) => response).catch((error) => {
         return error.response
     })
 }
 
+export const editElectricalBill = async (electricalBill) => {
+    let electricalBillId = electricalBill.electricalBillId
+    return await api.patch(`/electricalBills/updateElectricalBill/${electricalBillId}`, electricalBill).then((response) => response).catch((error) => {
+        return error.response
+    })
+}
+
+export const editMeterReading = async (meterReading) => {
+    let meterReadingId = meterReading.meterReadingId
+    console.log('meter reading ', meterReading)
+    return await api.patch(`/meterReadings/updateMeterReading/${meterReadingId}`, meterReading).then((response) => response).catch((error) => {
+        return error.response
+    })
+}
 export const getEquipment = async (equipmentId) => {
     return await api.get(`/equipments/getEquipment/${equipmentId}`, {
         equipmentId

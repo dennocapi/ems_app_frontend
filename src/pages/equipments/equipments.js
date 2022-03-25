@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getEquipments, deleteEquipment, getEquipment } from '../../api/apis'
-import { userStore } from '../../store/stores';
 import Table from '../../components/table'
 
 const Equipments = () => {
     const [equipments, setEquipments] = useState([])
-    const user = userStore(state => state.user)
     const [equipment, setEquipment] = useState('')
+    const [message, setMessage] = useState('')
 
     const COLUMNS = [
         {
@@ -15,42 +14,70 @@ const Equipments = () => {
             accessor: 'position'
         },
         {
-            Header: 'name',
+            Header: 'Name',
             accessor: 'name'
         },
         {
-            Header: 'type',
+            Header: 'Type',
             accessor: 'type'
         },
         {
-            Header: 'watts',
+            Header: 'Watts',
             accessor: 'watts'
         },
         {
-            Header: 'number',
+            Header: 'Number',
             accessor: 'number'
         },
+        {
+            Header: 'Daily cost(Ksh)',
+            accessor: 'dailyCost'
+        },
+        {
+            Header: 'Monthly cost(Ksh)',
+            accessor: 'monthlyCost'
+        },
+        {
+            Header: 'Yearly cost(Ksh)',
+            accessor: 'yearlyCost'
+        },
+
     ]
 
     useEffect(() => {
-        getEquipments().then((response) => {
-            if (response && response.status === 200) {
-                let equipments = response.data.equipments
-                setEquipments(equipments)
-                
-                equipments.map((equipment, i) => {
-                    equipment.position = i + 1
-                    return equipment
-                })
-            }
-            else if (response && response.status === 204) {
-                setEquipments(null)
-            } else {
-                console.log(response)
-            }
-        })
+        try {
+            getEquipments().then((response) => {
+                if (response && response.status === 200) {
+                    let equipments = response.data.equipments
+                    setEquipments(equipments)
+                }
+                else if (response && response.status === 204) {
+                    setEquipments(null)
+                } else {
+                    setMessage(response.data.message)
+                }
+            })
+        } catch (e) {
+            setMessage('Something went wrong.')
+        }
 
     }, [])
+
+    equipments.map((equipment, i) => {
+
+        let energyInKwHrs = (equipment.watts * equipment.usage / 1000)
+        let costOfOneKwHr = 21.87
+        let costPerDay = energyInKwHrs * costOfOneKwHr
+        let costPerMonth = costPerDay * 30
+        let costPerYear = costPerDay * 365
+
+        equipment.position = i + 1
+        equipment.dailyCost = Math.ceil(costPerDay * 100) / 100
+        equipment.monthlyCost = Math.ceil(costPerMonth * 100) / 100
+        equipment.yearlyCost = Math.ceil(costPerYear * 100) / 100
+
+        return equipment
+    })
 
 
     const onClickDelete = async (equipmentId) => {
@@ -67,30 +94,32 @@ const Equipments = () => {
     }
 
     const onClickEdit = async (equipmentId) => {
-        getEquipment(equipmentId).then((response) => {
-            if (response && response.status === 200) {
-                let equipment = response.data.equipment
-                setEquipment(equipment)
-            }
-            else if (response && response.status === 204) {
-                setEquipment(null)
-            } else {
-                console.log(response)
-                setEquipment([])
-            }
-        })
+        try{
+            getEquipment(equipmentId).then((response) => {
+                if (response && response.status === 200) {
+                    let equipment = response.data.equipment
+                    setEquipment(equipment)
+                }
+                else if (response && response.status === 204) {
+                    setEquipment(null)
+                } else {
+                    console.log(response)
+                    setEquipment([])
+                }
+            })
+        } catch(error){
+            setMessage('Something went wrong.')
+        }
     }
 
     return (
         <div className='container'>
-            {user &&
-                <Link className='Link' to="/equipments">Equipments</Link>} &nbsp;
-            {user &&
-                <Link className='Link' to={"/addEquipment"}>Add Equipment</Link>} &nbsp;
-            {user &&
-                <Link className='Link' to={"/barGraph"}>Power Charts</Link>}
+            <Link className='Link' to="/equipments">Equipment</Link> &nbsp;
+            <Link className='Link' to="/addEquipment">Add Equipment</Link> &nbsp;
+            <Link className='Link' to="/barGraph">Equipment energy cost graph</Link>
             <div className='container'>
-                {equipments ? <Table COLUMNS={COLUMNS} DATA={equipments} onClickDelete={onClickDelete} onClickEdit={onClickEdit} element={equipment} /> : <p style={{ fontSize: '30px' }}> No equipments found.</p>}
+                {message && <p className='error'>{message}</p>}
+                {equipments ? <Table COLUMNS={COLUMNS} DATA={equipments} onClickDelete={onClickDelete} onClickEdit={onClickEdit} element={equipment} editLink='/editEquipment' /> : <p style={{ fontSize: '30px' }}> No equipments found.</p>}
             </div>
         </div>
     )

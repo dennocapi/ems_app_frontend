@@ -3,7 +3,7 @@ import { useTable } from 'react-table'
 import { FaTimes, FaEdit } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-const Table = ({ COLUMNS, DATA, onClickDelete }) => {
+const Table = ({ COLUMNS, DATA, onClickDelete, editLink }) => {
 
     const columns = useMemo(() => COLUMNS, [COLUMNS])
     const data = useMemo(() => DATA, [DATA])
@@ -24,12 +24,14 @@ const Table = ({ COLUMNS, DATA, onClickDelete }) => {
                         {headerGroup.headers.map(column => (
                             <th
                                 {...column.getHeaderProps()}
+                                style={{backgroundColor:'#000352'}}
                             >
                                 {column.render('Header')}
+
                             </th>
                         ))}
-                        <th></th>
-                        <th></th>
+                        <th style={{backgroundColor:'#000352'}}></th>
+                        <th style={{backgroundColor:'#000352'}}></th>
                     </tr>
                 ))}
             </thead>
@@ -48,7 +50,7 @@ const Table = ({ COLUMNS, DATA, onClickDelete }) => {
                                 )
                             })}
 
-                            <td><Link to= "/editEquipment" state={row.original}><FaEdit style={{ color: 'blue' }} onClick={()=>{}}/></Link></td>
+                            <td><Link to={editLink} state={row.original}><FaEdit style={{ color: 'blue' }} onClick={() => { }} /></Link></td>
                             <td><FaTimes style={{ color: 'red' }} onClick={() => onClickDelete(row.original._id)} /></td>
 
                         </tr>

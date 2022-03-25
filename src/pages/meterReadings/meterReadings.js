@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { userStore } from '../../store/stores'
 import { getMeterReadings, deleteMeterReading } from '../../api/apis'
 import Table from '../../components/table'
 
 const MeterReadings = () => {
     const [meterReadings, setMeterReadings] = useState([])
-    const user = userStore(state => state.user)
+    const [message, setMessage] = useState('')
 
     const COLUMNS = [
         {
@@ -19,7 +18,7 @@ const MeterReadings = () => {
         },
         {
             Header: 'Date',
-            accessor: 'createdAt'
+            accessor: 'slicedDate'
         },
 
     ]
@@ -35,12 +34,20 @@ const MeterReadings = () => {
                     setMeterReadings(null)
                 }
                 else {
-                    console.log(response)
+                    setMessage('Something went wrong.')
                 }
             })
         }
         return () => { isMounted = false }
     }, [])
+
+    if (meterReadings) {
+        meterReadings.map((meterReading, i) => {
+            meterReading.position = i + 1
+            meterReading.slicedDate = meterReading.date.slice(0, 10)
+            return meterReading
+        })
+    }
 
     const onClickDelete = async (readingId) => {
         if (window.confirm('Are you sure you want to delete this meter reading?') === true) {
@@ -57,11 +64,12 @@ const MeterReadings = () => {
 
     return (
         <div className='container'>
-            {user && <Link className='Link' to="/meterReadings">Meter Readings</Link>}  &nbsp;
-            {user && <Link className='Link' to={"/meterReadingLineGraph"}>Meter Reading Graph</Link>} &nbsp;
-            {user && <Link className='Link' to={"/addMeterReading"}>Add Meter Reading</Link>}
+            <Link className='Link' to="/meterReadings">Meter Readings</Link>  &nbsp;
+            <Link className='Link' to={"/meterReadingLineGraph"}>Meter Reading Graph</Link> &nbsp;
+            <Link className='Link' to={"/addMeterReading"}>Add Meter Reading</Link>
             <div className='container'>
-                {meterReadings ? <Table COLUMNS={COLUMNS} DATA={meterReadings} onClickDelete={onClickDelete} /> : <p style={{ fontSize: '30px' }}> No meter reading found.</p>}
+                {message && <p className='error'>{message}</p>}
+                {meterReadings ? <Table COLUMNS={COLUMNS} DATA={meterReadings} onClickDelete={onClickDelete} editLink='/editMeterReading' /> : <p style={{ fontSize: '30px' }}> No meter reading found.</p>}
             </div>
         </div>
     )

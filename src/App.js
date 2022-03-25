@@ -27,7 +27,8 @@ import MeterReadingLineGraph from "./pages/meterReadings/meterReadingLineGraph";
 import EditEquipment from "./pages/equipments/editEquipment"
 import Notifications from "./components/notifications"
 import CostCalculator from "./components/costCalculator"
-import Toasts from "./components/toast"
+import EditElectricalBill from "./pages/electricalBills/editElectricalBill"
+import EditMeterReading from "./pages/meterReadings/editMeterReading"
 
 function App() {
 
@@ -85,7 +86,9 @@ function App() {
         {user && <Route path="/editEquipment" element={<EditEquipment />} />}
         {user && <Route path="/notifications" element={<Notifications />} />}
         {user && <Route path="/costCalculator" element={<CostCalculator />} />}
-        <Route path="/toast" element={<Toasts />} />
+        {user && <Route path="/editElectricalBill" element={<EditElectricalBill />}/>}
+        {user && <Route path="/editMeterReading" element={<EditMeterReading />}/>}
+
       </Routes>
       </Container>
     </Router>

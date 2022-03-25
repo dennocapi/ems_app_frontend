@@ -16,21 +16,25 @@ const EditEquipment = () => {
     const [watts, setWatts] = useState(equipment.watts)
     const [number, setNumber] = useState(equipment.number)
     const [usage, setUsage] = useState(equipment.usage)
+    const [message, setMessage] = useState('')
 
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         e.preventDefault()
 
         try {
-            editEquipment({ name, type, watts, number, usage }).then((response) => {
+            let equipmentId = equipment._id
+            await editEquipment({ name, type, watts, number, usage, equipmentId }).then((response) => {
+                console.log('Response data', response.data)
                 if (response && response.status === 200) {
                     alert('Equipment updated successfully.')
                     navigate('/equipments')
                 } else {
                     console.log(response)
+                    setMessage(response.data.message)
                 }
             })
         } catch (e) {
-            console.log(e)
+            setMessage('Something went wrong.')
         }
     }
 
@@ -39,6 +43,7 @@ const EditEquipment = () => {
             <Row>
                 <Col></Col>
                 <h3>Edit Equipment</h3>
+                {message && <p className='error'>{message}</p>}
                 <Col>
                     <form className='add-form' onSubmit={onSubmit}>
                         <div className='form-control'>

@@ -26,22 +26,6 @@ body {
   font-weight: bold;
 
 }
-.Link {
-  background-color: rgb(61, 60, 60);
-  color: white;
-  padding: 0.5em 0.5em;
-  text-decoration: none;
-  text-transform: uppercase;
-  border-radius: 5px;
-}
-
-.Link:hover {
-  background-color: rgb(131, 129, 129);
-}
-
-.Link:active {
-  background-color: black;
-}
 
 .signInContainer {
   max-width: 500px;

@@ -26,7 +26,7 @@ const Navbar = () => {
                         </NavLink>
                     {user &&
                         <NavLink to="/equipments" activestyle='true'>
-                            Equipments
+                            Equipment
                         </NavLink>
                     }
                     {user && <NavLink to="/electricalBills" activestyle='true'>

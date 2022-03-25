@@ -5,6 +5,7 @@ import Table from '../../components/table'
 
 const ElectricalBills = () => {
     const [electricalBills, setElectricalBills] = useState([])
+    const [message, setMessage] = useState('')
 
     const COLUMNS = [
         {
@@ -17,7 +18,7 @@ const ElectricalBills = () => {
         },
         {
             Header: 'Date',
-            accessor: 'createdAt'
+            accessor: 'slicedDate'
         },
 
     ]
@@ -33,12 +34,20 @@ const ElectricalBills = () => {
                     setElectricalBills(null)
 
                 } else {
-                    console.log(response)
+                    setMessage('Something went wrong.')
                 }
             })
         }
         return () => { isMounted = false }
     }, [])
+
+    if (electricalBills) {
+        electricalBills.map((electricalBill, i) => {
+            electricalBill.position = i + 1
+            electricalBill.slicedDate = electricalBill.date.slice(0, 10)
+            return electricalBill
+        })
+    }
 
     const onClickDelete = async (billId) => {
         if (window.confirm('Are you sure you want to delete this record?') === true) {
@@ -57,10 +66,11 @@ const ElectricalBills = () => {
     return (
         <div className='container'>
             <Link className='Link' to="/electricalBills">Electrical Bills</Link>  &nbsp;
-            <Link className='Link' to={"/electricalBillLineGraph"}>Bill Graph</Link> &nbsp;
-            <Link className='Link' to={"/addElectricalBill"}>Add Electrical Bill</Link>
+            <Link className='Link' to="/electricalBillLineGraph">Bill Graph</Link> &nbsp;
+            <Link className='Link' to="/addElectricalBill">Add Electrical Bill</Link>
             <div className='container'>
-                {electricalBills ? <Table COLUMNS={COLUMNS} DATA={electricalBills} onClickDelete={onClickDelete} /> : <p style={{ fontSize: '30px' }}> No bill records found.</p>}
+                {message && <p className='error'>{message}</p>}
+                {electricalBills ? <Table COLUMNS={COLUMNS} DATA={electricalBills} onClickDelete={onClickDelete} editLink='/editElectricalBill' /> : <p style={{ fontSize: '30px' }}> No bill records found.</p>}
             </div>
         </div>
     )

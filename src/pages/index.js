@@ -14,7 +14,7 @@ const Home = () => {
               </Card.Text>
               <Button variant="success" ><Link className='text-white' to="/costCalculator">Calculator</Link></Button>
             </Card.Body>
-          </Card>
+          </Card> <br/>
           <Card className="border-warning" style={{ width: '18rem' }}>
             <Card.Body>
               <Card.Title><b>Equipment</b></Card.Title>
@@ -23,7 +23,7 @@ const Home = () => {
               </Card.Text>
               <Button variant="success" ><Link className='text-white' to="/equipments">Equipment</Link></Button>
             </Card.Body>
-          </Card>
+          </Card> 
         </Col>
         <Col>
           <Card className="border-danger" style={{ width: '18rem' }}>
@@ -34,16 +34,16 @@ const Home = () => {
               </Card.Text>
               <Button variant="success"><Link className='text-white' to="/electricalBills">Electrical Bills</Link></Button>
             </Card.Body>
-          </Card>
+          </Card> <br />
           <Card className="border-success" style={{ width: '18rem' }}>
             <Card.Body>
               <Card.Title><b>Notifications</b></Card.Title>
               <Card.Text>
                 View Notifications and energy saving tips.
               </Card.Text>
-              <Button variant="success"><Link className='text-white' to="/meterReadings">Meter Readings</Link></Button>
+              <Button variant="success"><Link className='text-white' to="/notifications">Notifications</Link></Button>
             </Card.Body>
-          </Card>
+          </Card> <br />
         </Col>
         <Col>
           <Card className="border-info" style={{ width: '18rem' }}>
@@ -54,7 +54,7 @@ const Home = () => {
               </Card.Text>
               <Button variant="success"><Link className='text-white' to="/meterReadings">Meter Readings</Link></Button>
             </Card.Body>
-          </Card>
+          </Card> <br />
         </Col>
       </Row>
     </Container>

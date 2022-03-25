@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { userStore } from '../../store/stores'
 import { addMeterReading } from '../../api/apis'
 
 const AddMeterReading = () => {
     const [meterReading, setMeterReading] = useState('')
     const [date, setDate] = useState('')
-    const user = userStore(state => state.user)
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -37,9 +35,9 @@ const AddMeterReading = () => {
     }
     return (
         <div className='container'>
-            {user &&<Link className='Link' to="/meterReadings">Meter Readings</Link>}  &nbsp; 
-            {user &&<Link className='Link' to={"/meterReadingLineGraph"}>Meter Reading Graph</Link>} &nbsp; 
-            {user &&<Link className='Link' to={"/addMeterReading"}>Add Meter Reading</Link>}
+            <Link className='Link' to="/meterReadings">Meter Readings</Link>  &nbsp; 
+            <Link className='Link' to={"/meterReadingLineGraph"}>Meter Reading Graph</Link> &nbsp; 
+            <Link className='Link' to={"/addMeterReading"}>Add Meter Reading</Link>
             <div className='signInContainer'>
                 <h3>Add Meter Reading</h3>
 
