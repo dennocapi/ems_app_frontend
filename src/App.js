@@ -71,7 +71,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         {!user && <Route path="/signin" element={<SignIn />} />}
-        {user && <Route path="/logout" element={<Logout />} />}
+        <Route path="/logout" element={<Logout />} />
         {!user && <Route path="/sign-up" element={<SignUp />} />}
         {user && <Route path="/equipments" element={<Equipments />} />}
         {user && <Route path="/addEquipment" element={<AddEquipment />} />}
