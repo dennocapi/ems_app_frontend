@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_BASEURL,
+    baseURL: 'https://energy-management-app-backend.herokuapp.com',
     headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': process.env.REACT_APP_BASEURL,
+        'Access-Control-Allow-Origin': 'https://energy-management-app-backend.herokuapp.com',
     },
     withCredentials: true
 })

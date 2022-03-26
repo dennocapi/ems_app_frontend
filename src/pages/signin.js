@@ -4,6 +4,7 @@ import { userStore } from '../store/stores';
 
 function SignIn() {
     const storeUser = userStore(state => state.storeUser)
+    const user = userStore(state => state.user)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -15,13 +16,17 @@ function SignIn() {
         loginUser({ email: email, password: password }).then((response) => {
             if (response && response.status === 200) {
                 storeUser(response.data.user)
+                console.log('------User1-----------', user)
                 window.location.href = "/"
-                return false;
+                console.log('------User2-----------', user)
             } else if (response) {
+                storeUser(null)
                 setMessage(response.data.message)
             }
         }).catch(error => alert('An error occured.'))
     }
+    console.log('------User3-----------', user)
+    
 
     return (
         <div className='signInContainer'>

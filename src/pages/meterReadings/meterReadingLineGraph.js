@@ -26,13 +26,14 @@ const MeterReadingLineGraph = () => {
         return () => { isMounted = false }
     }, [])
 
-    meterReadings.map((electricReading) => {
-        let slicedDate = electricReading.date.slice(0, 10)
-        electricReading.date = slicedDate
+    if (meterReadings) {
+        meterReadings.map((electricReading) => {
+            let slicedDate = electricReading.date.slice(0, 10)
+            electricReading.date = slicedDate
 
-        return electricReading
-    })
-
+            return electricReading
+        })
+    }
     return (
         <div className='container'>
             <Link className='Link' to="/meterReadings">Meter Readings</Link>  &nbsp;

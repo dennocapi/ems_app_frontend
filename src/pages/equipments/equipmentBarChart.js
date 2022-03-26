@@ -28,21 +28,23 @@ const EquipmentBarChart = () => {
         return () => { isMounted = false }
     }, [])
 
-    equipments.map((equipment, i) => {
+    if (equipments) {
+        equipments.map((equipment, i) => {
 
-        let energyInKwHrs = (equipment.watts * equipment.usage / 1000)
-        let costOfOneKwHr = 21.87
-        let costPerDay = energyInKwHrs * costOfOneKwHr
-        let costPerMonth = costPerDay * 30
-        let costPerYear = costPerDay * 365
+            let energyInKwHrs = (equipment.watts * equipment.usage / 1000)
+            let costOfOneKwHr = 21.87
+            let costPerDay = energyInKwHrs * costOfOneKwHr
+            let costPerMonth = costPerDay * 30
+            let costPerYear = costPerDay * 365
 
-        equipment.position = i + 1
-        equipment.dailyCost = Math.ceil(costPerDay * 100) / 100
-        equipment.monthlyCost = Math.ceil(costPerMonth * 100) / 100
-        equipment.yearlyCost = Math.ceil(costPerYear * 100) / 100
+            equipment.position = i + 1
+            equipment.dailyCost = Math.ceil(costPerDay * 100) / 100
+            equipment.monthlyCost = Math.ceil(costPerMonth * 100) / 100
+            equipment.yearlyCost = Math.ceil(costPerYear * 100) / 100
 
-        return equipment
-    })
+            return equipment
+        })
+    }
 
     const handleChange = (event) => {
         if (event.target.value === 'dailyCost') {

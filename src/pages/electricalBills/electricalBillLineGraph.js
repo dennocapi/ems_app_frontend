@@ -20,12 +20,15 @@ const ElectricalBillLineGraph = () => {
             setMessage('Something went wrong.')
         }
     }, [])
-    electricalBills.map((bill) => {
-        let slicedDate = bill.date.slice(0, 10)
-        bill.date = slicedDate
+    
+    if (electricalBills) {
+        electricalBills.map((bill) => {
+            let slicedDate = bill.date.slice(0, 10)
+            bill.date = slicedDate
 
-        return bill
-    })
+            return bill
+        })
+    }
 
     return (
         <div className='container'>

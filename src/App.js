@@ -5,6 +5,7 @@ import history from './default';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap'
 
+import PrivateRoute from './components/privateRoute'
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { refreshToken } from './api/apis';
@@ -54,42 +55,43 @@ function App() {
           setTimeout(fetchNewToken, 1.8e+6)
         }
         else {
-          
+
         }
       })
     } else {
       setTimeout(fetchNewToken, 1.8e+6)
     }
   }, [user, storeUser]);
-  
+
   return (
     <Router history={history}>
       <Navbar />
       <Container>
-      <Routes>
-        {user ? <Route path="/" exact element={<Home />} /> : <Route path="/signin" element={<SignIn />} />}
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        {!user && <Route path="/signin" element={<SignIn />} />}
-        <Route path="/logout" element={<Logout />} />
-        {!user && <Route path="/sign-up" element={<SignUp />} />}
-        {user && <Route path="/equipments" element={<Equipments />} />}
-        {user && <Route path="/addEquipment" element={<AddEquipment />} />}
-        {user && <Route path="/pieChart" element={<EquipmentPieChart />} />}
-        {user && <Route path="/barGraph" element={<EquipmentBarChart />} />}
-        {user && <Route path="/addElectricalBill" element={<AddElectricalBill />} />}
-        {user && <Route path="/electricalBills" element={<ElectricalBills />} />}
-        {user && <Route path="/electricalBillLineGraph" element={<ElectricalBillLineGraph />} />}
-        {user && <Route path="/addMeterReading" element={<AddMeterReading />} />}
-        {user && <Route path="/meterReadings" element={<MeterReadings />} />}
-        {user && <Route path="/meterReadingLineGraph" element={<MeterReadingLineGraph />} />}
-        {user && <Route path="/editEquipment" element={<EditEquipment />} />}
-        {user && <Route path="/notifications" element={<Notifications />} />}
-        {user && <Route path="/costCalculator" element={<CostCalculator />} />}
-        {user && <Route path="/editElectricalBill" element={<EditElectricalBill />}/>}
-        {user && <Route path="/editMeterReading" element={<EditMeterReading />}/>}
 
-      </Routes>
+        <Routes>
+          {user ? <Route path="/" exact element={<Home />} /> : <Route path="/" element={<SignIn />} />}
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          {user ?  <Route path="/equipments" element={<Equipments />} /> : <Route path="/equipments" element={<SignIn />} />}
+          {user ?  <Route path="/addEquipment" element={<AddEquipment />} /> : <Route path="/addEquipment" element={<SignIn />} />}
+          {user ?  <Route path="/pieChart" element={<EquipmentPieChart />} /> : <Route path="/pieChart" element={<SignIn />} />}
+          {user ?  <Route path="/barGraph" element={<EquipmentBarChart />} /> : <Route path="/barGraph" element={<SignIn />} />}
+          {user ? <Route path="/addElectricalBill" element={<AddElectricalBill />} /> : <Route path="/addElectricalBill" element={<SignIn />} />}
+          {user ? <Route path="/electricalBills" element={<ElectricalBills />} /> : <Route path="/electricalBills" element={<SignIn />} />}
+          {user ? <Route path="/electricalBillLineGraph" element={<ElectricalBillLineGraph />} /> : <Route path="/electricalBillLineGraph" element={<SignIn />} />}
+          {user ? <Route path="/addMeterReading" element={<AddMeterReading />} /> : <Route path="/addMeterReading" element={<SignIn />} />}
+          {user ? <Route path="/meterReadings" element={<MeterReadings />} /> : <Route path="/meterReadings" element={<SignIn />} />}
+          {user ? <Route path="/meterReadingLineGraph" element={<MeterReadingLineGraph />} /> : <Route path="/meterReadingLineGraph" element={<SignIn />} />}
+          {user ? <Route path="/editEquipment" element={<EditEquipment />} /> : <Route path="/editEquipment" element={<SignIn />} />}
+          {user ? <Route path="/notifications" element={<Notifications />} /> : <Route path="/notifications" element={<SignIn />} />}
+          <Route path="/costCalculator" element={<CostCalculator />} />
+          {user ? <Route path="/editElectricalBill" element={<EditElectricalBill />} /> : <Route path="/editElectricalBill" element={<SignIn />} />}
+          {user ? <Route path="/editMeterReading" element={<EditMeterReading />} /> : <Route path="/editMeterReading" element={<SignIn />} />}
+
+        </Routes>
       </Container>
     </Router>
   );

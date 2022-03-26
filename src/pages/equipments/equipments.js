@@ -63,6 +63,7 @@ const Equipments = () => {
 
     }, [])
 
+    if(equipments) {
     equipments.map((equipment, i) => {
 
         let energyInKwHrs = (equipment.watts * equipment.usage / 1000)
@@ -77,7 +78,7 @@ const Equipments = () => {
         equipment.yearlyCost = Math.ceil(costPerYear * 100) / 100
 
         return equipment
-    })
+    })}
 
 
     const onClickDelete = async (equipmentId) => {
