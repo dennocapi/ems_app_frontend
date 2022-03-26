@@ -14,7 +14,6 @@ const SignUp = () => {
     const [companyName, setCompanyName] = useState('')
 
     const onSubmit = (e) => {
-        console.log('clicked')
         e.preventDefault()
 
         registerUser({ email: email, password: password, companyName: companyName, location: location }).then(response => {
@@ -27,7 +26,7 @@ const SignUp = () => {
                 setMessage(response.data.message)
             }
         }).catch(error => {
-            alert('An error occured.')
+            setMessage('Something went wrong.')
         })
     }
 

@@ -4,8 +4,6 @@ import { userStore } from './store/stores'
 import history from './default';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap'
-
-import PrivateRoute from './components/privateRoute'
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { refreshToken } from './api/apis';
