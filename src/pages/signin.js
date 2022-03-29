@@ -4,7 +4,6 @@ import { userStore } from '../store/stores';
 
 function SignIn() {
     const storeUser = userStore(state => state.storeUser)
-    const user = userStore(state => state.user)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
